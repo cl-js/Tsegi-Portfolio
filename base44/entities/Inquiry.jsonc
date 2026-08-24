@@ -1,0 +1,85 @@
+{
+  "name": "Inquiry",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "title": "Client Name",
+      "description": "Full name of the prospective client"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "organization": {
+      "type": "string",
+      "title": "Organization"
+    },
+    "project_type": {
+      "type": "string",
+      "enum": [
+        "Bridge",
+        "Highway",
+        "Building",
+        "Water Infrastructure",
+        "Site Development",
+        "Other"
+      ],
+      "title": "Project Type"
+    },
+    "location": {
+      "type": "string",
+      "title": "Project Location"
+    },
+    "budget_range": {
+      "type": "string",
+      "enum": [
+        "Under $50K",
+        "$50K - $250K",
+        "$250K - $1M",
+        "$1M - $5M",
+        "$5M+",
+        "To be determined"
+      ],
+      "title": "Budget Range"
+    },
+    "timeline": {
+      "type": "string",
+      "enum": [
+        "Immediate (0-3 months)",
+        "Short (3-6 months)",
+        "Mid (6-12 months)",
+        "Long (12+ months)",
+        "Flexible"
+      ],
+      "title": "Timeline"
+    },
+    "scope_description": {
+      "type": "string",
+      "title": "Scope Description",
+      "description": "Detailed description of the project scope and requirements"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewed",
+        "consulted",
+        "archived"
+      ],
+      "default": "new",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "client_name",
+    "email",
+    "project_type",
+    "scope_description"
+  ]
+}
