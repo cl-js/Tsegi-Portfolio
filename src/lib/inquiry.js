@@ -17,6 +17,27 @@ export async function submitInquiry(payload) {
     throw new Error("Inquiry backend is not configured yet.");
   }
 
+  // Keep the browser payload aligned with the existing Supabase table.
+  // Optional contact/project details are included in the message so no
+  // destructive schema migration is required for the existing inquiries.
+  const messageParts = [
+    payload.scope_description?.trim(),
+    payload.phone?.trim() ? `Phone: ${payload.phone.trim()}` : null,
+    payload.organization?.trim() ? `Organization: ${payload.organization.trim()}` : null,
+    payload.location?.trim() ? `Project location: ${payload.location.trim()}` : null,
+  ].filter(Boolean);
+
+  const body = {
+    name: payload.client_name.trim(),
+    email: payload.email.trim(),
+    occasion: payload.location?.trim() || null,
+    project_type: payload.project_type || null,
+    budget: payload.budget_range || null,
+    timeline: payload.timeline || null,
+    message: messageParts.join("\n\n"),
+    status: "new",
+  };
+
   const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
     method: "POST",
     headers: {
@@ -25,7 +46,7 @@ export async function submitInquiry(payload) {
       "Content-Type": "application/json",
       Prefer: "return=minimal",
     },
-    body: JSON.stringify({ ...payload, status: "new" }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
